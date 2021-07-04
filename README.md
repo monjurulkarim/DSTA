@@ -73,3 +73,19 @@ Take the DAD dataset as an example, after training with the DAD dataset and conf
 bash run_train_test.sh test 0 dad 10
 ```
 The evaluation results on test set will be reported, and visualization results will be saved in `output/DSTA/vgg16/test/`.
+
+<a name="citation"></a>
+## :bookmark_tabs:  Citation
+
+Please cite our paper if you find our code useful.
+
+```
+@article{karim2021dynamic,
+  title={A Dynamic Spatial-temporal Attention Network for Early Anticipation of Traffic Accidents},
+  author={Karim, Muhammad Monjurul and Li, Yu and Qin, Ruwen and Yin, Zhaozheng},
+  journal={arXiv preprint arXiv:2106.10197},
+  year={2021}
+}
+```
+
+Parts of the code are adopted from [UString](https://github.com/monjurulkarim/UString) project.
