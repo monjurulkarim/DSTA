@@ -1,7 +1,7 @@
 # DSTA
 This is the implementation code for the paper, <a href="https://arxiv.org/abs/2106.10197"> "A Dynamic Spatial-temporal Attention Network for Early Anticipation of Traffic Accidentss"</a>.</p>
 
-
+<img width="464" alt="qualitative_sample_1 (2)" src="https://user-images.githubusercontent.com/40798690/124397188-822f8400-dcdc-11eb-8bdd-234984dafed3.PNG">
 
 
 <a name="dataset"></a>
