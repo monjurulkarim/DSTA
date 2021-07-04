@@ -13,7 +13,7 @@ The code currently supports three datasets., DAD and CCD. These datasets need to
 > * For DAD dataset, you can acquire it from [DAD official](https://github.com/smallcorgi/Anticipating-Accidents). The officially provided features are grouped into batches while it is more standard to split them into separate files for training and testing. To this end, you can use the script `./script/split_dad.py`.
 
 <a name="install"></a>
-## :file_cabinet: Installation Guide
+## Installation Guide
 
 ### 1. Setup Python Environment
 
@@ -54,5 +54,4 @@ pip install -v -e .
 python setup.py install
 
 # Then you are all set!
-```
-**Note**: This repo currently does not support `CUDA>=10.2` environment, as the object detection API we used is no longer supported only by the latest `mmdetection`, and the `torch-geometry` lib we sued is dependent on `PyTorch=1.0`. We will release the support for the lastest CUDA and PyTorch. 
+``` 
