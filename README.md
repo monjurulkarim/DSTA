@@ -75,7 +75,7 @@ bash run_train_test.sh test 0 dad 10
 The evaluation results on test set will be reported, and visualization results will be saved in `output/DSTA/vgg16/test/`.
 
 <a name="citation"></a>
-## :bookmark_tabs:  Citation
+## Citation
 
 Please cite our paper if you find our code useful.
 
