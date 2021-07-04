@@ -63,3 +63,13 @@ To train DSTA model from scratch, run the following commands for DAD dataset:
 bash run_train_test.sh train 0 dad 10
 ```
 By default, the snapshot of each checkpoint file will be saved in `output/DSTA/vgg16/snapshot/`.
+
+
+### 4. Test the trained DSTA model
+
+Take the DAD dataset as an example, after training with the DAD dataset and configuring the dataset correctly, run the following command. By default the model file will be placed at `output/DSTA/vgg16/snapshot/final_model.pth`.
+```shell
+# For dad dataset, use GPU_ID=0 and batch_size=10.
+bash run_train_test.sh test 0 dad 10
+```
+The evaluation results on test set will be reported, and visualization results will be saved in `output/DSTA/vgg16/test/`.
