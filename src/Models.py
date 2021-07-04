@@ -1,8 +1,5 @@
 '''
-This is V18. Here, soft attention is applied in every 5 frames.
-taking the meanpooling of 5 frames.
-h_dim = 512
-Modified FC layers after GRU. Two dense layers in FC layers. Dropout also.
+Muhammad Monjurul Karim
 
 '''
 
