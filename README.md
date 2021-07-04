@@ -3,6 +3,7 @@ This is the implementation code for the paper, <a href="https://arxiv.org/abs/21
 
 <img width="464*2" alt="qualitative_sample_1 (2)" src="https://user-images.githubusercontent.com/40798690/124397188-822f8400-dcdc-11eb-8bdd-234984dafed3.PNG">
 
+The aim of this project is to predict an accident as early as possible using dashcam video data.
 
 <a name="dataset"></a>
 ## Dataset Preparation
