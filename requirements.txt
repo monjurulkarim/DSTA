@@ -5,8 +5,6 @@ torch_scatter==1.4.0
 torch_cluster==1.4.5
 torch_sparse==0.4.3
 tensorboardX==2.0
-tensorflow==2.1.0
-tensorflow_gpu==1.15.2
 mmcv==0.5.5
 tqdm==4.35.0
 six==1.12.0
@@ -23,9 +21,9 @@ scikit-learn==0.21.3
 opencv_python==4.1.1.26
 ipdb==0.12.3
 ipython==7.13.0
-Pillow==7.1.1
+Pillow==8.1.1
 pycocotools==2.0.0
-PyYAML==5.3.1
+PyYAML==5.4
 scikit-image==0.15.0
 imageio==2.5.0
 youtube-dl==2019.11.28
