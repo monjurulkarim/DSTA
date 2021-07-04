@@ -55,9 +55,9 @@ python setup.py install
 
 # Then you are all set!
 ``` 
-### 3. Train UString from scratch.
+### 3. Train DSTA from scratch.
 
-To train UString model from scratch, run the following commands for DAD dataset:
+To train DSTA model from scratch, run the following commands for DAD dataset:
 ```shell
 # For dad dataset, use GPU_ID=0 and batch_size=10.
 bash run_train_test.sh train 0 dad 10
