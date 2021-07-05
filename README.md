@@ -9,7 +9,7 @@ The aim of this project is to predict an accident as early as possible using das
 <a name="dataset"></a>
 ## Dataset Preparation
 
-The code currently supports three datasets., DAD and CCD. These datasets need to be prepared under the folder `data/`. 
+The code currently supports two datasets., DAD and CCD. These datasets need to be prepared under the folder `data/`. 
 
 > * For CCD dataset, please refer to the [CarCrashDataset Official](https://github.com/Cogito2012/CarCrashDataset) repo for downloading and deployment. 
 > * For DAD dataset, you can acquire it from [DAD official](https://github.com/smallcorgi/Anticipating-Accidents). The officially provided features are grouped into batches while it is more standard to split them into separate files for training and testing. To this end, you can use the script `./script/split_dad.py`.
