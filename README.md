@@ -1,3 +1,4 @@
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/a-dynamic-spatial-temporal-attention-network/accident-anticipation-on-ccd)](https://paperswithcode.com/sota/accident-anticipation-on-ccd?p=a-dynamic-spatial-temporal-attention-network)
 # DSTA
 This is the implementation code for the paper, <a href="https://arxiv.org/abs/2106.10197"> "A Dynamic Spatial-temporal Attention Network for Early Anticipation of Traffic Accidentss"</a>.</p>
 
