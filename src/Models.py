@@ -129,6 +129,11 @@ class SpatialAttention(torch.nn.Module):
         self.weights_att_wa = Variable(torch.empty(h_dim, h_dim).normal_(mean=0.0, std=0.01))
 
     def forward(self,obj_embed, h, t, zeros_object):
+        self.weights_att_ua = self.weights_att_ua.to(h.device)
+        self.weights_att_ba = self.weights_att_ba.to(h.device)
+        self.weights_att_wa = self.weights_att_wa.to(h.device)
+        self.weights_att_w = self.weights_att_w.to(h.device)
+        
         brcst_w = self.weights_att_w.unsqueeze(0).repeat(self.n_obj,1,1)
         obj_embed = obj_embed.permute(1,0,2)
         image_part = torch.matmul(obj_embed, self.weights_att_ua.unsqueeze(0).repeat(self.n_obj,1,1)) + self.weights_att_ba
