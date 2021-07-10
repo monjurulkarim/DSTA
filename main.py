@@ -51,7 +51,7 @@ def test_all(testdata_loader, model):
     with torch.no_grad():
         for i, (batch_xs, batch_ys, batch_toas) in enumerate(testdata_loader):
             # run forward inference
-            losses, all_outputs, hiddens = model(batch_xs, batch_ys, batch_toas,
+            losses, all_outputs, hiddens, alphas = model(batch_xs, batch_ys, batch_toas,
                     hidden_in=None, nbatch=len(testdata_loader), testing=False)
             # make total loss
             losses['total_loss'] =  losses['cross_entropy']
@@ -97,7 +97,7 @@ def test_all_vis(testdata_loader, model, vis=True, multiGPU=False, device=torch.
     with torch.no_grad():
         for i, (batch_xs, batch_ys, batch_toas, detections, video_ids) in tqdm(enumerate(testdata_loader), desc="batch progress", total=len(testdata_loader)):
             # run forward inference
-            losses, all_outputs, hiddens = model(batch_xs, batch_ys, batch_toas,
+            losses, all_outputs, hiddens, alphas = model(batch_xs, batch_ys, batch_toas,
                     hidden_in=None,  nbatch=len(testdata_loader), testing=False, eval_uncertain=False)
 
             num_frames = batch_xs.size()[1]
@@ -246,7 +246,7 @@ def train_eval():
         for i, (batch_xs, batch_ys, batch_toas) in loop:
             # ipdb.set_trace()
             optimizer.zero_grad()
-            losses, all_outputs, hidden_st = model(batch_xs, batch_ys, batch_toas, nbatch=len(traindata_loader))
+            losses, all_outputs, hidden_st, alphas = model(batch_xs, batch_ys, batch_toas, nbatch=len(traindata_loader))
             losses['total_loss'] =  losses['cross_entropy']
             losses['total_loss'] += p.loss_beta * losses['auxloss']
 
@@ -411,7 +411,7 @@ if __name__ == '__main__':
     parser.add_argument('--test_iter', type=int, default=64,
                         help='The number of iteration to perform a evaluation process. Default: 64')
     parser.add_argument('--hidden_dim', type=int, default=512,
-                        help='The dimension of hidden states in RNN. Default: 256')
+                        help='The dimension of hidden states in RNN. Default: 512')
     parser.add_argument('--latent_dim', type=int, default=256,
                         help='The dimension of latent space. Default: 256')
     parser.add_argument('--loss_beta', type=float, default=15,
