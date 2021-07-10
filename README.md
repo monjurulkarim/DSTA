@@ -62,8 +62,17 @@ python setup.py install
 ### 3.  Pre-trained Models
 > * [**Pre-trained DSTA Models**](https://drive.google.com/drive/folders/1QpfxS58XqBUex6zwZG1DWD0rd0Nb-aAu?usp=sharing): The pretrained model weights for testing and demo usages. After downloading for demo please put it inside direcoty ./demo/.
 
+### 4. Demo
 
-### 3. Train DSTA from scratch.
+The following script will generate a video with an accident prediction curve. Note that before you run the following script, both the python and mmdetection environments above are needed. The following command is an example using the pretrained model on CCD dataset. 
+
+```shell
+bash run_demo.sh demo/000007.mp4
+```
+Results will be saved in the same folder `demo/`.
+
+
+### 5. Train DSTA from scratch.
 
 To train DSTA model from scratch, run the following commands for DAD dataset:
 ```shell
@@ -73,7 +82,7 @@ bash run_train_test.sh train 0 dad 10
 By default, the snapshot of each checkpoint file will be saved in `output/DSTA/vgg16/snapshot/`.
 
 
-### 4. Test the trained DSTA model
+### 6. Test the trained DSTA model
 
 Take the DAD dataset as an example, after training with the DAD dataset and configuring the dataset correctly, run the following command. By default the model file will be placed at `output/DSTA/vgg16/snapshot/final_model.pth`.
 ```shell
