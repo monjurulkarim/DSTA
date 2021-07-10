@@ -133,7 +133,6 @@ class SpatialAttention(torch.nn.Module):
         self.weights_att_ba = self.weights_att_ba.to(h.device)
         self.weights_att_wa = self.weights_att_wa.to(h.device)
         self.weights_att_w = self.weights_att_w.to(h.device)
-        
         brcst_w = self.weights_att_w.unsqueeze(0).repeat(self.n_obj,1,1)
         obj_embed = obj_embed.permute(1,0,2)
         image_part = torch.matmul(obj_embed, self.weights_att_ua.unsqueeze(0).repeat(self.n_obj,1,1)) + self.weights_att_ba
@@ -142,11 +141,12 @@ class SpatialAttention(torch.nn.Module):
         e = torch.tanh(torch.matmul(h, self.weights_att_wa).permute(1,0,2)+ image_part)
         alphas = torch.mul(torch.softmax(torch.sum(torch.matmul(e,brcst_w),2),0),zeros_object)
         alphas = alphas*10
+        al_alphas = alphas
         obj_embed = torch.mul(alphas.unsqueeze(2),obj_embed)
         obj_embed = torch.sum(obj_embed,0)
         obj_embed = obj_embed.unsqueeze(0)
         obj_embed = obj_embed.permute(1,0,2)
-        return obj_embed
+        return obj_embed, al_alphas
 
 class DSTA(nn.Module):
     def __init__(self, x_dim, h_dim, z_dim, n_layers=1, n_obj=19, n_frames=100, fps=20.0, with_saa=True):
@@ -174,7 +174,7 @@ class DSTA(nn.Module):
         self.ce_loss = torch.nn.CrossEntropyLoss(reduction='none')
 
 
-    def forward(self, x, y, toa, graph, hidden_in=None, edge_weights=None, npass=2, nbatch=80, testing=False):
+    def forward(self, x, y, toa, hidden_in=None, nbatch=80, testing=False):
         """
         :param x, (batchsize, nFrames, nBoxes, Xdim) = (10 x 100 x 20 x 4096)
         :param y, (10 x 2)
@@ -194,6 +194,7 @@ class DSTA(nn.Module):
             h = Variable(hidden_in)
         h = h.to(x.device)
 
+        alpha = torch.zeros(self.n_frames)
         zeros_object_1 = torch.sum(x[:,:,1:self.n_obj+1,:].permute(1,2,0,3),3)
         zeros_object_2 = ~zeros_object_1.eq(0)
         zeros_object = zeros_object_2.float()
@@ -206,9 +207,10 @@ class DSTA(nn.Module):
             x_t = self.phi_x(x[:, t])
             img_embed = x_t[:, 0, :].unsqueeze(1) # 10 x 1 x 256
             obj_embed = x_t[:, 1:, :]  # 10 x 19 x 256
-            obj_embed= self.sp_attention(obj_embed, h, t, zeros_object[t])
+            obj_embed, alphas= self.sp_attention(obj_embed, h, t, zeros_object[t])
             x_t = torch.cat([obj_embed, img_embed], dim=-1)  # 10 x 19 x 512
             h_list.append(h)
+            all_alphas.append(alphas)
 
             if t==2:
                 h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2]),dim=0)
@@ -216,24 +218,28 @@ class DSTA(nn.Module):
             elif t==3:
                 h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3]),dim=0)
                 h = self.frame_aggregation(h_staked)
-            elif t==4:
-                h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4]),dim=0)
+            elif t > 3:
+                h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2],h_list[t-3],h_list[t-4]),dim=0)
                 h = self.frame_aggregation(h_staked)
-            elif t==5:
-                h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5]),dim=0)
-                h = self.frame_aggregation(h_staked)
-            elif t==6:
-                h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5], h_list[t-6]),dim=0)
-                h = self.frame_aggregation(h_staked)
-            elif t==7:
-                h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5], h_list[t-6], h_list[t-7]),dim=0)
-                h = self.frame_aggregation(h_staked)
-            elif t==8:
-                h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5], h_list[t-6], h_list[t-7], h_list[t-8]),dim=0)
-                h = self.frame_aggregation(h_staked)
-            elif t>8:
-                h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5], h_list[t-6], h_list[t-7], h_list[t-8], h_list[t-9]),dim=0)
-                h = self.frame_aggregation(h_staked)
+
+            # elif t==4:
+            #     h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4]),dim=0)
+            #     h = self.frame_aggregation(h_staked)
+            # elif t==5:
+            #     h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5]),dim=0)
+            #     h = self.frame_aggregation(h_staked)
+            # elif t==6:
+            #     h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5], h_list[t-6]),dim=0)
+            #     h = self.frame_aggregation(h_staked)
+            # elif t==7:
+            #     h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5], h_list[t-6], h_list[t-7]),dim=0)
+            #     h = self.frame_aggregation(h_staked)
+            # elif t==8:
+            #     h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5], h_list[t-6], h_list[t-7], h_list[t-8]),dim=0)
+            #     h = self.frame_aggregation(h_staked)
+            # elif t>8:
+            #     h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5], h_list[t-6], h_list[t-7], h_list[t-8], h_list[t-9]),dim=0)
+            #     h = self.frame_aggregation(h_staked)
             # recurrence
             output, h = self.gru_net(x_t, h)
 
@@ -250,7 +256,7 @@ class DSTA(nn.Module):
             L4 = torch.mean(self.ce_loss(dec, y[:, 1].to(torch.long)))
             losses['auxloss'] = L4
 
-        return losses, all_outputs, all_hidden
+        return losses, all_outputs, all_hidden, all_alphas
 
 
     def _exp_loss(self, pred, target, time, toa, fps=10.0):
