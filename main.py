@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 '''
-Variants of V7
+
 '''
 
 from __future__ import absolute_import
