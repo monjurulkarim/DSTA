@@ -66,7 +66,7 @@ python setup.py install
 <a name="models"></a>
 ### 3.  Pre-trained Models
 > * [**Cascade R-CNN**](https://drive.google.com/drive/folders/1fbjKrzgXv_FobuIAS37k9beCkxYzVavi?usp=sharing): This is the pre-trained object detector trained by [UString](https://github.com/Cogito2012/UString). Please, directly download the pre-trained Cascade R-CNN model files and modified source files from their website. Please download and extract them under `lib/mmdetection/`.
-> * [**Pre-trained DSTA Models**](https://drive.google.com/drive/folders/1QpfxS58XqBUex6zwZG1DWD0rd0Nb-aAu?usp=sharing): The pretrained model weights for testing and demo usages. If you want to use the pre-trained model for demo, then please put it inside direcoty `demo/`.
+> * [**Pre-trained DSTA Models**](https://drive.google.com/drive/folders/1QpfxS58XqBUex6zwZG1DWD0rd0Nb-aAu?usp=sharing): The pretrained model weights for testing and demo usages. If you want to use the pre-trained model for demo, then please put it inside the directory `demo/`.
 
 ### 4. Demo
 
