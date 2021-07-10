@@ -60,7 +60,7 @@ python setup.py install
 ``` 
 <a name="models"></a>
 ### 3.  Pre-trained Models
-> * [**Pre-trained DSTA Models**](https://drive.google.com/drive/folders/1QpfxS58XqBUex6zwZG1DWD0rd0Nb-aAu?usp=sharing): The pretrained model weights for testing and demo usages. After downloading for demo please put it inside direcoty ./demo/.
+> * [**Pre-trained DSTA Models**](https://drive.google.com/drive/folders/1QpfxS58XqBUex6zwZG1DWD0rd0Nb-aAu?usp=sharing): The pretrained model weights for testing and demo usages. After downloading for demo please put it inside direcoty `demo/`.
 
 ### 4. Demo
 
