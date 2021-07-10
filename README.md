@@ -3,7 +3,7 @@
 This is the implementation code for the paper, <a href="https://arxiv.org/abs/2106.10197"> "A Dynamic Spatial-temporal Attention Network for Early Anticipation of Traffic Accidentss"</a>.</p>
 
 ![ezgif com-gif-maker (6)](https://user-images.githubusercontent.com/40798690/125171386-f907c980-e181-11eb-8cb7-8c91a794bf98.gif)
-%<img width="464*2" alt="qualitative_sample_1 (3)" src="https://user-images.githubusercontent.com/40798690/124397340-421cd100-dcdd-11eb-81b6-66dc594d5bd6.PNG">
+<!-- <img width="464*2" alt="qualitative_sample_1 (3)" src="https://user-images.githubusercontent.com/40798690/124397340-421cd100-dcdd-11eb-81b6-66dc594d5bd6.PNG"> -->
 
 
 The aim of this project is to predict an accident as early as possible using dashcam video data.
