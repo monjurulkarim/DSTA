@@ -221,7 +221,9 @@ class DSTA(nn.Module):
             elif t > 3:
                 h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2],h_list[t-3],h_list[t-4]),dim=0)
                 h = self.frame_aggregation(h_staked)
+             
 
+            # Uncomment below for DAD dataset
             # elif t==4:
             #     h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4]),dim=0)
             #     h = self.frame_aggregation(h_staked)
