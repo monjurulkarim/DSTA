@@ -1,0 +1,4 @@
+Please, keep the following two files in this directory:
+
+1. final_model_ccd.pth
+2. input video for prediction (eg. 000007.mp4) 
