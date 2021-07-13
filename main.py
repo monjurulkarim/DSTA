@@ -98,7 +98,7 @@ def test_all_vis(testdata_loader, model, vis=True, multiGPU=False, device=torch.
         for i, (batch_xs, batch_ys, batch_toas, detections, video_ids) in tqdm(enumerate(testdata_loader), desc="batch progress", total=len(testdata_loader)):
             # run forward inference
             losses, all_outputs, hiddens, alphas = model(batch_xs, batch_ys, batch_toas,
-                    hidden_in=None,  nbatch=len(testdata_loader), testing=False, eval_uncertain=False)
+                    hidden_in=None,  nbatch=len(testdata_loader), testing=False)
 
             num_frames = batch_xs.size()[1]
             batch_size = batch_xs.size()[0]
