@@ -231,7 +231,7 @@ def train_eval():
     if p.resume:
         model, optimizer, start_epoch = load_checkpoint(model, optimizer=optimizer, filename=p.model_file)
 
-    # write histograms
+    # write histograms at line 234
     # write_weight_histograms(logger, model, 0)
     iter_cur = 0
     best_metric = 0
