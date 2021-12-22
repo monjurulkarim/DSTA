@@ -205,10 +205,10 @@ class DSTA(nn.Module):
             # reduce the dim of node feature (FC layer)
             #########################################################
             x_t = self.phi_x(x[:, t])
-            img_embed = x_t[:, 0, :].unsqueeze(1) # 10 x 1 x 256
-            obj_embed = x_t[:, 1:, :]  # 10 x 19 x 256
+            img_embed = x_t[:, 0, :].unsqueeze(1) # 10 x 1 x 512
+            obj_embed = x_t[:, 1:, :]  # 10 x 19 x 512
             obj_embed, alphas= self.sp_attention(obj_embed, h, t, zeros_object[t])
-            x_t = torch.cat([obj_embed, img_embed], dim=-1)  # 10 x 19 x 512
+            x_t = torch.cat([obj_embed, img_embed], dim=-1)  # 10 x 1 x 1024
             h_list.append(h)
             all_alphas.append(alphas)
 
