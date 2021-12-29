@@ -18,6 +18,12 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 import numpy as np
 
+'''
+Note:
+------------------------------------------------
+In the paper, we mistakenly said we used softmax activation function in the last layer of the prediction layer. However, to get the reported results we did not 
+use softmax activation in the last layer. Hence, no softmax activation is used in the AccidentPredictor and The GRUNet layer.
+'''
 
 # layers
 class AccidentPredictor(nn.Module):
