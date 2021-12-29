@@ -81,4 +81,4 @@ Please cite our paper if you find our code useful.
 }
 ```
 
-Parts of the code are adopted from [UString](https://github.com/Cogito2012/UString) project. Many thanks to the contributors of this repository.
+Parts of the code are adopted from [UString](https://github.com/Cogito2012/UString) project. Many thanks to the contributors of that repository.
