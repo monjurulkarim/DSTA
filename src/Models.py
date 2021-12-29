@@ -47,7 +47,7 @@ class frame_AttAggregate(torch.nn.Module):
     def __init__(self, agg_dim):
         super(frame_AttAggregate, self).__init__()
         self.agg_dim = agg_dim
-        self.weight = nn.Parameter(torch.Tensor(512, 512))  # (512, 1)
+        self.weight = nn.Parameter(torch.Tensor(512, 512)) 
         self.softmax = nn.Softmax(dim=-1)
         # initialize parameters
         import math
@@ -70,7 +70,7 @@ class SelfAttAggregate(torch.nn.Module):
     def __init__(self, agg_dim):
         super(SelfAttAggregate, self).__init__()
         self.agg_dim = agg_dim
-        self.weight = nn.Parameter(torch.Tensor(agg_dim, 1))  # (100, 1)
+        self.weight = nn.Parameter(torch.Tensor(agg_dim, 1))  
         self.softmax = nn.Softmax(dim=-1)
         # initialize parameters
         import math
@@ -82,15 +82,15 @@ class SelfAttAggregate(torch.nn.Module):
         """
         hiddens = hiddens.unsqueeze(0)
         hiddens = hiddens.permute(1,0,2,3)
-        maxpool = torch.max(hiddens, dim=1)[0]  # (10, 256, 100)
+        maxpool = torch.max(hiddens, dim=1)[0]  
         avgpool = torch.mean(hiddens, dim=1)
-        agg_spatial = torch.cat((avgpool, maxpool), dim=1)  # (10, 512, 100)
+        agg_spatial = torch.cat((avgpool, maxpool), dim=1)  
         # soft-attention
-        energy = torch.bmm(agg_spatial.permute([0, 2, 1]), agg_spatial)  # (10, 100, 100)
+        energy = torch.bmm(agg_spatial.permute([0, 2, 1]), agg_spatial)  
         attention = self.softmax(energy)
-        weighted_feat = torch.bmm(attention, agg_spatial.permute([0, 2, 1]))  # (10, 100, 512)
+        weighted_feat = torch.bmm(attention, agg_spatial.permute([0, 2, 1]))  
         weight = self.weight.unsqueeze(0).repeat([hiddens.size(0), 1, 1])
-        agg_feature = torch.bmm(weighted_feat.permute([0, 2, 1]), weight)  # (10, 512, 1)
+        agg_feature = torch.bmm(weighted_feat.permute([0, 2, 1]), weight) 
         return agg_feature.squeeze(dim=-1)  # (10, 512)
 
 
@@ -124,8 +124,8 @@ class SpatialAttention(torch.nn.Module):
     def __init__(self, h_dim, z_dim, n_layers, n_obj):
         super (SpatialAttention, self).__init__()
         self.n_layers = n_layers
-        self.h_dim = h_dim # 256
-        self.z_dim = z_dim # 256
+        self.h_dim = h_dim 
+        self.z_dim = z_dim 
         self.n_obj = n_obj # 19
         self.batch_size = 10
 
@@ -159,8 +159,8 @@ class DSTA(nn.Module):
         super(DSTA, self).__init__()
 
         self.x_dim = x_dim
-        self.h_dim = h_dim  # 512 (-->256)
-        self.z_dim = z_dim  # 256 (-->128)
+        self.h_dim = h_dim  
+        self.z_dim = z_dim  
         self.n_layers = n_layers
         self.n_obj = n_obj
         self.n_frames = n_frames
@@ -195,7 +195,7 @@ class DSTA(nn.Module):
 
 
         if hidden_in is None:
-            h = Variable(torch.zeros(self.n_layers, x.size(0),  self.h_dim)) #  1x 10 x 256
+            h = Variable(torch.zeros(self.n_layers, x.size(0),  self.h_dim)) 
         else:
             h = Variable(hidden_in)
         h = h.to(x.device)
@@ -211,10 +211,10 @@ class DSTA(nn.Module):
             # reduce the dim of node feature (FC layer)
             #########################################################
             x_t = self.phi_x(x[:, t])
-            img_embed = x_t[:, 0, :].unsqueeze(1) # 10 x 1 x 512
-            obj_embed = x_t[:, 1:, :]  # 10 x 19 x 512
+            img_embed = x_t[:, 0, :].unsqueeze(1) 
+            obj_embed = x_t[:, 1:, :]  
             obj_embed, alphas= self.sp_attention(obj_embed, h, t, zeros_object[t])
-            x_t = torch.cat([obj_embed, img_embed], dim=-1)  # 10 x 1 x 1024
+            x_t = torch.cat([obj_embed, img_embed], dim=-1)  
             h_list.append(h)
             all_alphas.append(alphas)
 
@@ -248,7 +248,7 @@ class DSTA(nn.Module):
             # elif t>8:
             #     h_staked = torch.stack((h_list[t],h_list[t-1], h_list[t-2], h_list[t-3], h_list[t-4], h_list[t-5], h_list[t-6], h_list[t-7], h_list[t-8], h_list[t-9]),dim=0)
             #     h = self.frame_aggregation(h_staked)
-            # recurrence
+            # #recurrence
             output, h = self.gru_net(x_t, h)
 
             # computing losses
