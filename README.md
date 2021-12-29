@@ -12,7 +12,7 @@ The aim of this project is to predict an accident as early as possible using das
 <a name="dataset"></a>
 ## Dataset Preparation
 
-The code currently supports two datasets., DAD and CCD. These datasets need to be prepared under the folder `data/`. 
+The code currently supports two datasets, DAD and CCD. These datasets need to be prepared under the folder `data/`. 
 
 > * For CCD dataset, please refer to the [CarCrashDataset Official](https://github.com/Cogito2012/CarCrashDataset) repo for downloading and deployment. 
 > * For DAD dataset, you can acquire it from [DAD official](https://github.com/smallcorgi/Anticipating-Accidents). The officially provided features are grouped into batches while it is more standard to split them into separate files for training and testing. To this end, you can use the script `./script/split_dad.py`.
@@ -33,6 +33,34 @@ conda activate py37
 # install dependencies
 pip install -r requirements.txt
 ```
+
+### 1.1.(Optional) Setup MMDetection Environment
+
+If you need to use mmdetection for training and testing Cascade R-CNN models, you may need to setup an mmdetection environment separately such as `mmlab`. Please follow the [official mmdetection installation guide](https://github.com/open-mmlab/mmdetection/blob/master/docs/install.md).
+```shell
+# create python environment
+conda create -n mmlab python=3.7
+
+# activate environment
+conda activate mmlab
+
+# install dependencies
+pip install torch==1.4.0+cu100 torchvision==0.5.0+cu100 -f https://download.pytorch.org/whl/torch_stable.html
+pip install mmcv==0.4.2
+
+# Follow the instructions at https://github.com/open-mmlab/mmdetection/blob/master/docs/install.md
+git clone https://github.com/open-mmlab/mmdetection.git
+cd mmdetection
+git checkout v1.1.0  # important!
+cp -r ../Cascade\ R-CNN/* ./  # copy the downloaded files into mmdetection folder
+
+# compile & install
+pip install -v -e .
+python setup.py install
+
+# Then you are all set!
+```
+
 
 ### 2.  Pre-trained Models
 > * [**Cascade R-CNN**](https://drive.google.com/drive/folders/1fbjKrzgXv_FobuIAS37k9beCkxYzVavi?usp=sharing): This is the pre-trained object detector trained by UString. Please, directly download the pre-trained Cascade R-CNN model files and modified source files from their website. Please download and extract them under `lib/mmdetection/`.
