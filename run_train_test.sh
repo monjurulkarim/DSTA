@@ -21,7 +21,6 @@ echo Logging output to "$LOG"
 OUT_DIR=output/DSTA/vgg16
 
 # experiments on DAD dataset
-# original learning rate is 0.0005
 case ${PHASE} in
   train)
     CUDA_VISIBLE_DEVICES=$GPUS python main.py \

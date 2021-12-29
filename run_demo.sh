@@ -4,9 +4,9 @@
 VIDEO_PATH=$1
 GPUS=0
 
-VIDEO_FILENAME="${VIDEO_PATH##*/}"  # ./demo/000821.mp4
+VIDEO_FILENAME="${VIDEO_PATH##*/}"  # ./demo/000007.mp4
 DIR="${VIDEO_PATH%/*}"  # ./demo
-VID="${VIDEO_FILENAME%.*}"  # 000821
+VID="${VIDEO_FILENAME%.*}"  # 000007
 
 FEAT_FILE="$DIR/$VID"_feature.npz
 RESULT_FILE="$DIR/$VID"_result.npz
