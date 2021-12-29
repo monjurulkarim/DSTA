@@ -5,9 +5,6 @@ This is the implementation code for the paper, <a href="https://arxiv.org/abs/21
   <img src="demo/visualization_000142.gif" alt="Visualization Demo" width="800"/>
 </div>
 
-<!-- ![ezgif com-gif-maker (6)](https://user-images.githubusercontent.com/40798690/125171386-f907c980-e181-11eb-8cb7-8c91a794bf98.gif)  -->
-
-<!-- <img width="464*2" alt="qualitative_sample_1 (3)" src="https://user-images.githubusercontent.com/40798690/124397340-421cd100-dcdd-11eb-81b6-66dc594d5bd6.PNG"> -->
 
 
 The aim of this project is to predict an accident as early as possible using dashcam video data.
@@ -25,7 +22,7 @@ The code currently supports two datasets., DAD and CCD. These datasets need to b
 
 ### 1. Setup Python Environment
 
-The code is implemented with `Python=3.7.4` and `PyTorch=1.0.0` with `CUDA=10.0.130` and `cuDNN=7.6.3`. We highly recommend using Anaconda to create virtual environment to run this code. Please follow the following installation dependencies strictly:
+The code is implemented and tested with `Python=3.7.9` and `PyTorch=1.2.0` with `CUDA=10.2`. We highly recommend using Anaconda to create virtual environment to run this code. Please follow the following installation dependencies strictly:
 ```shell
 # create python environment
 conda create -n py37 python=3.7
@@ -37,38 +34,11 @@ conda activate py37
 pip install -r requirements.txt
 ```
 
-### 2. Setup MMDetection Environment (Optional)
-
-If you need to use mmdetection for training and testing Cascade R-CNN models, you may need to setup an mmdetection environment separately such as `mmlab`. Please follow the [official mmdetection installation guide](https://github.com/open-mmlab/mmdetection/blob/master/docs/install.md).
-```shell
-# create python environment
-conda create -n mmlab python=3.7
-
-# activate environment
-conda activate mmlab
-
-# install dependencies
-pip install torch==1.4.0+cu100 torchvision==0.5.0+cu100 -f https://download.pytorch.org/whl/torch_stable.html
-pip install mmcv==0.4.2
-
-# Follow the instructions at https://github.com/open-mmlab/mmdetection/blob/master/docs/install.md
-git clone https://github.com/open-mmlab/mmdetection.git
-cd mmdetection
-git checkout v1.1.0  # important!
-cp -r ../Cascade\ R-CNN/* ./  # copy the downloaded files into mmdetection folder
-
-# compile & install
-pip install -v -e .
-python setup.py install
-
-# Then you are all set!
-``` 
-<a name="models"></a>
-### 3.  Pre-trained Models
-> * [**Cascade R-CNN**](https://drive.google.com/drive/folders/1fbjKrzgXv_FobuIAS37k9beCkxYzVavi?usp=sharing): This is the pre-trained object detector trained by [UString](https://github.com/Cogito2012/UString). Please, directly download the pre-trained Cascade R-CNN model files and modified source files from their website. Please download and extract them under `lib/mmdetection/`.
+### 2.  Pre-trained Models
+> * [**Cascade R-CNN**](https://drive.google.com/drive/folders/1fbjKrzgXv_FobuIAS37k9beCkxYzVavi?usp=sharing): This is the pre-trained object detector trained by UString. Please, directly download the pre-trained Cascade R-CNN model files and modified source files from their website. Please download and extract them under `lib/mmdetection/`.
 > * [**Pre-trained DSTA Models**](https://drive.google.com/drive/folders/1QpfxS58XqBUex6zwZG1DWD0rd0Nb-aAu?usp=sharing): The pretrained model weights for testing and demo usages. If you want to use the pre-trained model for demo, then please put it inside the directory `demo/`.
 
-### 4. Demo
+### 3. Demo
 
 The following script will generate a video with an accident prediction curve. Note that before you run the following script, both the python and mmdetection environments above are needed. The following command is an example using the pretrained model on CCD dataset. 
 
@@ -78,7 +48,7 @@ bash run_demo.sh demo/000007.mp4
 Results will be saved in the same folder `demo/`.
 
 
-### 5. Train DSTA from scratch.
+### 4. Train DSTA from scratch.
 
 To train DSTA model from scratch, run the following commands for DAD dataset:
 ```shell
@@ -88,7 +58,7 @@ bash run_train_test.sh train 0 dad 10
 By default, the snapshot of each checkpoint file will be saved in `output/DSTA/vgg16/snapshot/`.
 
 
-### 6. Test the trained DSTA model
+### 5. Test the trained DSTA model
 
 Take the DAD dataset as an example, after training with the DAD dataset and configuring the dataset correctly, run the following command. By default the model file will be placed at `output/DSTA/vgg16/snapshot/final_model.pth`.
 ```shell
@@ -111,4 +81,4 @@ Please cite our paper if you find our code useful.
 }
 ```
 
-Parts of the code are adopted from [UString](https://github.com/Cogito2012/UString) project.
+Parts of the code are adopted from [UString](https://github.com/Cogito2012/UString) project. Many thanks to the contributors of this repository.
