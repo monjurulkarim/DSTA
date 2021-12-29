@@ -67,11 +67,11 @@ def bbox_sampling(bbox_result, nbox=19, imsize=None, topN=5):
         y2 = min(max(y1 + 1, int(box[3])), imsize[0])
         if (y2 - y1 + 1 > 2) and (x2 - x1 + 1 > 2):
             new_boxes.append([x1, y1, x2, y2, box[4], label])
-            # print('box[4] :', box[4])
+
     if len(new_boxes) == 0:  # no bboxes
         new_boxes.append([0, 0, imsize[1]-1, imsize[0]-1, 1.0, 0])
     new_boxes = np.array(new_boxes, dtype=int)
-    # print('new_boxes : ', new_boxes)
+
     # sampling
     n_candidate = min(topN, len(new_boxes))
     if len(new_boxes) <= nbox - n_candidate:
@@ -116,13 +116,13 @@ def extract_features(detector, feat_extractor, video_file, n_frames=50, n_boxes=
             frame = videoReader.get_frame(idx)
         # run object detection inference
         bbox_result = inference_detector(detector, frame)
-        # print(idx)
 
-        # print('frame : ', idx ,' shape : ', bbox_result )
+
+
         # sampling a fixed number of bboxes
         bboxes = bbox_sampling(bbox_result, nbox=n_boxes, imsize=frame.shape[:2])
 
-        # print('frame : ', idx ,' bboxes : ', bboxes )
+
 
         detections[idx, :, :] = bboxes
         # prepare frame data
@@ -147,8 +147,7 @@ def init_accident_model(model_file, dim_feature=4096, hidden_dim=512, latent_dim
     # building model
     model = DSTA(dim_feature, hidden_dim, latent_dim,
         n_layers=1, n_obj=n_obj, n_frames=n_frames, fps=fps, with_saa=True)
-    # model = DSTA(dim_feature, hidden_dim, latent_dim,
-    #     n_layers=1, n_obj=n_obj, n_frames=n_frames, fps=fps, with_saa=True, uncertain_ranking=True, use_mask=False)
+
     model = model.to(device=device)
     model.eval()
     # load check point
@@ -260,7 +259,6 @@ if __name__ == '__main__':
     parser.add_argument('--fps', type=float, help='The fps of input video.', default=10.0)
     # feature extraction
     parser.add_argument('--video_file', type=str, default='demo/000821.mp4')
-    # parser.add_argument('--mmdetection', type=str, help="the path to the mmdetection.", default="lib/mmdetection")
     parser.add_argument('--mmdetection', type=str, help="the path to the mmdetection.", default="/mmdetection")
     # inference
     parser.add_argument('--feature_file', type=str, help="the path to the feature file.", default="demo/000821_feature.npz")
@@ -289,9 +287,6 @@ if __name__ == '__main__':
         from src.Models import DSTA
         # load feature file
         features, labels, toa, detections, vid = load_input_data(p.feature_file, device=device)
-        # print('det : ', detections)
-        file_name = 'feat_for_check.npz'
-        np.savez_compressed(file_name, features=features.cpu(), labels=labels.cpu(), toa= toa.cpu())
 
         # prepare model
         model = init_accident_model(p.ckpt_file, dim_feature=features.shape[-1], n_frames=p.n_frames, fps=p.fps)
@@ -340,7 +335,7 @@ if __name__ == '__main__':
             now_weight = now_weight
             det_boxes = detections[t]  # 19 x 6
             index = np.argsort(now_weight)
-            # print(index)
+
 
             for num_box in index:
                 attention_frame[int(det_boxes[num_box,1]):int(det_boxes[num_box,3]),int(det_boxes[num_box,0]):int(det_boxes[num_box,2])] = now_weight[num_box]*1000
@@ -352,7 +347,7 @@ if __name__ == '__main__':
             width = frame.shape[1]
             height = int(img.shape[0] * (width / img.shape[1]))
             img = cv2.resize(img, (width, height), interpolation = cv2.INTER_AREA)
-            # vis = np.concatenate((attention_frame, img), axis=0)
+
             h1,w1 = dst.shape[:2]
             h2,w2 = img.shape[:2]
             vis = np.zeros((h1+h2, max(w1, w2),3),np.uint8)
