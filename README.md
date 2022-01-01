@@ -98,7 +98,7 @@ The evaluation results on test set will be reported, and visualization results w
 <a name="citation"></a>
 ## Citation
 
-Please cite our paper if you find our code useful.
+Please cite our paper if you find the code useful.
 
 ```
 @article{karim2021dynamic,
