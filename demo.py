@@ -194,8 +194,7 @@ def load_checkpoint(model, optimizer=None, filename='checkpoint.pth.tar', isTrai
 def parse_results(all_outputs, batch_size=1, n_frames=50):
     # parse inference results
     pred_score = np.zeros((batch_size, n_frames), dtype=np.float32)
-    pred_au = np.zeros((batch_size, n_frames), dtype=np.float32)
-    pred_eu = np.zeros((batch_size, n_frames), dtype=np.float32)
+
     # run inference
     for t in range(n_frames):
         pred = all_outputs[t]  # B x 2
