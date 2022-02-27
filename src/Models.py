@@ -142,7 +142,7 @@ class SpatialAttention(torch.nn.Module):
         d = torch.matmul(h, self.weights_att_wa)
         e = torch.tanh(torch.matmul(h, self.weights_att_wa).permute(1,0,2)+ image_part)
         alphas = torch.mul(torch.softmax(torch.sum(torch.matmul(e,brcst_w),2),0),zeros_object)
-        alphas = alphas*10
+#         alphas = alphas*10
         al_alphas = alphas
         obj_embed = torch.mul(alphas.unsqueeze(2),obj_embed)
         obj_embed = torch.sum(obj_embed,0)
