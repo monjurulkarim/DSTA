@@ -7,13 +7,10 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import inspect
+# import inspect
 from torch.nn.parameter import Parameter
 import torch
 import torch.nn as nn
-#from torch_geometric.utils import remove_self_loops, add_self_loops
-#import torch_scatter
-#from torch_scatter import scatter_mean, scatter_max, scatter_add
 from torch.autograd import Variable
 import torch.nn.functional as F
 import numpy as np
