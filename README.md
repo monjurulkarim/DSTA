@@ -101,11 +101,15 @@ The evaluation results on test set will be reported, and visualization results w
 Please cite our paper if you find the code useful.
 
 ```
-@article{karim2021dynamic,
-  title={A Dynamic Spatial-temporal Attention Network for Early Anticipation of Traffic Accidents},
+@article{karim2022dynamic,
+  title={A dynamic Spatial-temporal attention network for early anticipation of traffic accidents},
   author={Karim, Muhammad Monjurul and Li, Yu and Qin, Ruwen and Yin, Zhaozheng},
-  journal={arXiv preprint arXiv:2106.10197},
-  year={2021}
+  journal={IEEE Transactions on Intelligent Transportation Systems},
+  volume={23},
+  number={7},
+  pages={9590--9600},
+  year={2022},
+  publisher={IEEE}
 }
 ```
 
